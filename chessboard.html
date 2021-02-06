@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <!--
+  Purpose: Generate 8x8 grid of # (imitating a chessboard) using string in console.log(). Make program work for any size given.
+  *CORRECTION* Grid should alternate between # and " ", imitating the light and dark squares on a chessboard.
+  -->
+  <script>
+    // let size = Number(prompt("How big?"));
+    // let myString = "";
+    // for (r = 0; r < size; r++) { // Loop creates rows
+    //   for (c = 0; c < size; c++) { // Loop fills columns
+    //     myString += "# ";
+    //   }
+    //   myString = myString.trim() + "\n";
+    // }
+    // console.log(myString);
+
+    // And here's the given solution. It generates a very different board than mine, which means I didn't fully understand the desired output (in part because of incorrect display on my Kindle): Alternating between white and dark spaces across columns and rows.
+
+    // let size = 8;
+    // let board = "";
+    // for (let y = 0; y < size; y++) {
+    //   for (let x = 0; x < size; x++) {
+    //     if ((x + y) % 2 == 0) {
+    //       board += "  ";
+    //     } else {
+    //       board += "# ";
+    //     }
+    //   }
+    //   board += "\n";
+    // }
+    // console.log(board);
+
+    // I'll correct my code by using less compact odd/even conditions:
+
+    let size = Number(prompt("How many squares per side?"));
+    let myString = "";
+    for (r = 0; r < size; r++) { // Loop creates rows
+      for (c = 0; c < size; c++) { // Loop fills columns
+        // when increment is even
+        if ((r + c) % 2 == 0) myString += "  ";
+        // when increment is odd
+        else if (c == size - 1) myString += "#"; // prevents extra space at end of row
+        else myString += "# ";
+      }
+      myString = myString + "\n";
+    }
+    console.log(myString);
+  </script>
+</body>
+
+</html>

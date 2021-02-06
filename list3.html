@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script>
+    // IDEA: WHAT IF I COULD REFER TO EVER DEEPER LEVELS OF someList BY RECURSIVELY CONCATENATING STRINGS TO PRODUCE THE DOT NOTATION REFERENCE TO EACH NODE? I can do this by setting some parameter, then referring to param.value, param.rest. Each time the function recursively calls itself, param.rest is the argument, and when the function adds a value to `param.value`, it is actually adding it to param.rest.value ()
+
+    // IDEA: rest: (listBuild(++i) || null);    ACTUALLY, `||` is not needed, as listBuild(i) == null when i > .length
+
+    // let i = 0; accounted for as param of listBuild, initialized at function call.
+
+
+    function arrayToList(array) {
+      let list = {};
+      function listBuild(listItem, i) {
+        listItem.value = array[i];
+        if (array[++i] != null) {
+          listItem.rest = {};
+          listBuild(listItem.rest, i);
+        } else listItem.rest = null;
+      }
+      listBuild(list, 0);
+      return list;
+    }
+    console.log(arrayToList([10, 20, 30]));
+
+    function listToArray(list) {
+      let array = [];
+      function arrayBuild(listItem, i) {
+        if (listItem.value != null) {
+          array[i] = listItem.value;
+          arrayBuild(listItem.rest, ++i);
+        } // `else` not needed here
+      }
+      arrayBuild(list, 0)
+      return array;
+    }
+    console.log(listToArray(arrayToList([10, 20, 30])));
+
+    // takes an element and a list and creates a new list that adds the element to the front of the input list
+    function prepend(element, list) {
+      let newList = {
+        value: element,
+        rest: list,
+      };
+      list = newList;
+      return list;
+    }
+
+    //  takes a list and a number and returns the element at the given position in the list (with zero referring to the first element) or undefined when there is no such element
+    // IDEA: this is getting an off-by-one error: it returns undefined one iteration too soon.
+
+    function nth(list, pos, i = 0) { // Pass 3: [list == {value: 30, rest: {null}}, pos==5, i==2]
+      if (list.rest == null) {
+        return undefined;
+	  } else if (i < pos) {   // [ 2<5, list.rest == null so pass over IF to ELSE
+        return nth(list.rest, pos, ++i);    // // Recursive call nth(list.rest.rest, 5, i=2)
+      } else {                                //
+        return list.value;   // [ list.value == 30 ]
+      }
+    }
+
+    { value:	10, rest:	{ value:	20, rest:	{value: 30, rest: null}}}
+    console.log(nth(arrayToList([10, 20, 30]), 5));
+  </script>
+</body>
+
+</html>

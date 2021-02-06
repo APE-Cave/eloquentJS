@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script>
+      // The code declaring range() is an example of two new things for me:
+
+      // 1) Creating default parameters for when an argument isn't provided, and
+      // 2) Conditional operator (aka ternary operator). The format for this is:
+
+        // condition ? exprIfTrue : exprIfFalse
+
+        // Example:
+        // var age = 26;
+        // var beverage = (age >= 21) ? "Beer" : "Juice";
+        // console.log(beverage); // "Beer"
+
+        // It's worth noting that the parentheses around the condition are optional, though it does help with readability.
+
+    function range(start, end, delta = (start < end) ? 1 : -1) {
+      let array = [];
+      if (delta > 0) {
+        for (let i = start; i <= end; i += delta) array.push(i);
+      } else if (delta < 0) {
+        for (let i = start; i >= end; i += delta) array.push(i);
+      }
+      return array;
+    }
+
+    function sum(array) {
+      let arraySum = 0;
+      for (let number of array) {
+        arraySum += number;
+      }
+      return arraySum;
+    }
+  </script>
+</body>
+
+</html>

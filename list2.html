@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+
+    // IDEA: WHAT IF I COULD REFER TO EVER DEEPER LEVELS OF someList BY RECURSIVELY CONCATENATING STRINGS TO PRODUCE THE DOT NOTATION REFERENCE TO EACH NODE? I can do this by setting some parameter, then referring to param.value, param.rest
+
+    // IDEA: rest: (listBuild(++i) || null);
+
+      let someList = {value, rest};
+      function arrayToList(someArray) {
+        // Begin recursive function IF i<someArray.length or IF someArray[i]!=null
+        let i = 0;
+        function listBuild() {
+          if (someArray[i] != null) {
+            {value} = someArray[i],
+            {rest} = listBuild(someArray[++i])
+          } else {
+            // if null
+          }
+
+          }
+            // Take first item, convert to object
+            // increment
+            //  Call this function with someArray[++i] to give value to {rest} property   *** need to use prefixed incrementor ***
+            //  End IF condition (?)
+            //  Return someList to previous call
+        }
+        listBuild();
+
+        return someList; // to wherever arrayToList was called
+      }
+
+      let someArray = [1, 2, 3];
+      console.log(arrayToList(someArray));
+    </script>
+  </body>
+</html>

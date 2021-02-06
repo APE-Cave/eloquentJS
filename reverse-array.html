@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script>
+    function reverseArray(arrayStart) {
+      let arrayReversed = [];
+      for (let temp of arrayStart) arrayReversed.unshift(temp);
+      return arrayReversed;
+    }
+
+    // Stores each someArray in temp, then inserts duplicate of temp at the beginning of the array. Because this increases the length of the array by one element at the front end, it increases the index of all other values by one, so we must increment by 2 in order to reach the "next" value of the array. The variable "steps" is twice the initial array length to accommodate this, and prevents infinite loop (as it will not change, unlike someArray.length).
+    function reverseArrayInPlace(someArray) {
+      let steps = 2 * someArray.length;
+      for (let i = 0; i < steps; i += 2) {
+        let temp = someArray[i];
+        someArray.unshift(temp);
+      }
+      // Now the array is like a mirror [3, 2, 1, 1, 2, 3], so we remove the old elements from the end via for-loop + pop, or by using slice (NOT slice, because creates new array, violates constraints of given problem)
+      for (let i = 0; i < (steps / 2); i++) {
+        someArray.pop();
+      }
+      console.log(someArray);
+      return someArray;
+    }
+
+    console.log(reverseArray(["A", "B", "C"]));
+    // → ["C", "B", "A"];
+
+    let arrayValue = [1, 2, 3, 4, 5];
+
+    reverseArrayInPlace(arrayValue);
+    console.log(arrayValue);
+    // → [5, 4, 3, 2, 1]
+
+  //=======================//
+    // PROVIDED SOLUTION:
+    function reverseArray(array) {
+      let output = [];
+      for (let i = array.length - 1; i >= 0; i--) {
+        output.push(array[i]);
+      }
+      return output;
+    }
+
+    function reverseArrayInPlace(array) {
+      for (let i = 0; i < Math.floor(array.length / 2); i++) {
+        let old = array[i];
+        array[i] = array[array.length - 1 - i];
+        array[array.length - 1 - i] = old;
+      }
+      return array;
+    }
+  //=======================//
+
+  </script>
+</body>
+
+</html>

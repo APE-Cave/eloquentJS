@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script>
+    // IDEA: WHAT IF I COULD REFER TO EVER DEEPER LEVELS OF someList BY RECURSIVELY CONCATENATING STRINGS TO PRODUCE THE DOT NOTATION REFERENCE TO EACH NODE? I can do this by setting some parameter, then referring to param.value, param.rest. Each time the function recursively calls itself, param.rest is the argument, and when the function adds a value to `param.value`, it is actually adding it to param.rest.value ()
+
+    // IDEA: rest: (listBuild(++i) || null);    ACTUALLY, `||` is not needed, as listBuild(i) == null when i > .length
+
+    // let i = 0; accounted for as param of listBuild, initialized at function call.
+
+
+    function arrayToList(array, list = {}, i = 0) {
+      if (array[i] != null) {
+        list.value = array[i];
+        list.rest = {};
+        arrayToList(array, list.rest, ++i);
+      } else {
+        list.rest = null;
+        return list;
+      }
+    }
+
+    function arrayToList(array, listItem = {}, i = 0) {
+      if (array[i] != null) {
+        listItem.value = array[i];
+        console.log(listItem);
+        return arrayToList(array, listItem.rest = {}, ++i);
+      } else {
+        listItem.rest = null;
+        return listItem;
+      }
+    }
+
+    console.log(arrayToList([10, 20, 30]));
+
+    // function listToArray(list) {
+    //   let array = [];
+    //   function arrayBuild(listItem, i) {
+    //     if (listItem.value != null) {
+    //       array[i] = listItem.value;
+    //       arrayBuild(listItem.rest, ++i);
+    //     } // `else` not needed here
+    //   }
+    //   arrayBuild(list, 0)
+    //   return array;
+    // }
+    // console.log(listToArray(arrayToList([10, 20, 30])));
+  </script>
+</body>
+
+</html>

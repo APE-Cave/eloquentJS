@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script>
+    for (n = 1; n <= 100; n++) {
+      let output = "";
+      if (n % 3 == 0 && n % 5 == 0) {
+        output = "FizzBuzz"
+      } else if (n % 3 == 0) {
+        output = "Fizz";
+      } else if (n % 5 == 0) {
+        output = "Buzz";
+      } else {
+        output = n;
+      }
+      console.log(output);
+    }
+    // Below is the provided solution. I wanted to try += to concat the output for multiples of both 3 and 5, but couldn't think of a simple way to generate output = n without repeating the inverse condtitions, which seemed inelegant. The simple conditional statements look way less bulky without the unnecessary braces and line breaks.
+
+    // for (let n = 1; n <= 100; n++) {
+    //   let output = "";
+    //   if (n % 3 == 0) output += "Fizz";
+    //   if (n % 5 == 0) output += "Buzz";
+    //   console.log(output || n);
+    // }
+    // I had no idea that logical OR could be used in console.log(). Used this way, non-Boolean values are regarded as "truthy" by default or "falsy" if they are null, 0, "", etc. The first value is returned if truthy without evaluating the second value.
+  </script>
+</body>
+
+</html>
+
+<!-- PSEUDO CODE:
+
+FOR (number=1; number<=100; number++) {
+  IF (number%3==0) {PRINT "Fizz";}
+  ELSE IF (number%5==0) {PRINT "Buzz";}
+  ELSE {PRINT number;}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->

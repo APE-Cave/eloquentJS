@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      let example = [1, 2, 3];
+      let someList = {};
+      let i = 0;
+
+      function arrayToList(someArray) {
+        // Begin recursive function IF i<someArray.length or IF someArray[i]!=null
+        function listBuild() {
+          someList.value = someArray[i];
+          if (someArray[i] != null) {
+            listItem = {
+              value: someArray[i],
+              rest: listBuild(someArray[i++])
+            }
+
+          }
+            // Take first item, convert to object
+            // increment
+            //  Call this function with someArray[++i] to give value to {rest} property   *** need to use prefixed incrementor ***
+            //  End IF condition (?)
+            //  Return someList to previous call
+        }
+
+        listBuild();
+        return someList; // to wherever arrayToList was called
+      }
+
+      console.log(arrayToList(example));
+    </script>
+  </body>
+</html>
