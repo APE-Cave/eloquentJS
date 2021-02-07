@@ -1,0 +1,35 @@
+NOTES for writing function `nth()`:
+
+
+`if (list.value == null)` will never execute, because if `list` itself is null, it cannot have properties like `list.value`.
+
+I can nest if/else conditions inside of larger IF condition.
+
+CONDITIONS:
+i < pos
+i == pos
+list.rest == null (or !=)
+list.value == null (or !=)
+
+DESIRED OUTCOMES:
+recursion, increment i
+return undefined
+return list.value
+
+
+OUTCOMES w/conditions:
+
+IF i == pos
+THEN return list.value
+
+IF list.rest == null AND i < pos,
+THEN return undefined
+
+IF i < pos AND list.rest != null,
+THEN recursion, increment i
+
+STRUCTURE OF LOGIC:
+IF i < pos
+  IF list.rest != null
+  IF list.rest == null
+ELSE IF i == pos

@@ -17,6 +17,7 @@
 
     function arrayToList(array) {
       let list = {};
+
       function listBuild(listItem, i) {
         listItem.value = array[i];
         if (array[++i] != null) {
@@ -27,20 +28,20 @@
       listBuild(list, 0);
       return list;
     }
-    console.log(arrayToList([10, 20, 30]));
+    // console.log(arrayToList([10, 20, 30]));
 
     function listToArray(list) {
       let array = [];
       function arrayBuild(listItem, i) {
-        if (listItem.value != null) {
-          array[i] = listItem.value;
+        array[i] = listItem.value;
+        if (listItem.rest != null) {
           arrayBuild(listItem.rest, ++i);
         } // `else` not needed here
       }
       arrayBuild(list, 0)
       return array;
     }
-    console.log(listToArray(arrayToList([10, 20, 30])));
+    // console.log(listToArray(arrayToList([10, 20, 30])));
 
     // takes an element and a list and creates a new list that adds the element to the front of the input list
     function prepend(element, list) {
@@ -51,22 +52,25 @@
       list = newList;
       return list;
     }
+    // console.log(prepend(10, prepend(20, null)));
+
 
     //  takes a list and a number and returns the element at the given position in the list (with zero referring to the first element) or undefined when there is no such element
-    // IDEA: this is getting an off-by-one error: it returns undefined one iteration too soon.
+    // IDEA: this is getting an off-by-one error: it returns undefined one iteration too soon. SOLVED:
 
     function nth(list, pos, i = 0) { // Pass 3: [list == {value: 30, rest: {null}}, pos==5, i==2]
-      if (list.rest == null) {
-        return undefined;
-	  } else if (i < pos) {   // [ 2<5, list.rest == null so pass over IF to ELSE
-        return nth(list.rest, pos, ++i);    // // Recursive call nth(list.rest.rest, 5, i=2)
-      } else {                                //
-        return list.value;   // [ list.value == 30 ]
-      }
+      if (i < pos) {
+        if (list.rest == null) {
+          return undefined; // If we haven't reached the requestedposition and the next node is null, there's no point in looking further.
+        } else {
+          return nth(list.rest, pos, ++i);
+        }
+      } else return list.value;
     }
+    // console.log(nth(arrayToList([10, 20, 30]), 5));
 
-    { value:	10, rest:	{ value:	20, rest:	{value: 30, rest: null}}}
-    console.log(nth(arrayToList([10, 20, 30]), 5));
+
+    // {value: 10,rest: {value: 20,rest: {value: 30,rest: null}}}
   </script>
 </body>
 
