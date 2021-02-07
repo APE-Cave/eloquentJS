@@ -1,38 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <script>
-      let example = [1, 2, 3];
-      let someList = {};
-      let i = 0;
 
-      function arrayToList(someArray) {
-        // Begin recursive function IF i<someArray.length or IF someArray[i]!=null
-        function listBuild() {
-          someList.value = someArray[i];
-          if (someArray[i] != null) {
-            listItem = {
-              value: someArray[i],
-              rest: listBuild(someArray[i++])
-            }
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
 
-          }
-            // Take first item, convert to object
-            // increment
-            //  Call this function with someArray[++i] to give value to {rest} property   *** need to use prefixed incrementor ***
-            //  End IF condition (?)
-            //  Return someList to previous call
-        }
-
-        listBuild();
-        return someList; // to wherever arrayToList was called
+<body>
+  <script>
+    function arrayToList(array) {
+      let list = null; // null so that list.rest is not undefined
+      for (let i = array.length - 1; i >= 0; i--) {
+        list = {
+          value: array[i],
+          rest: list
+        };
       }
+      return list;
+    }
+    console.log(arrayToList([10, 20]));
+    // → {value: 10, rest: {value: 20, rest: null}}
 
-      console.log(arrayToList(example));
-    </script>
-  </body>
+    function listToArray(list) {
+      let array = [];
+      for (let node = list; node; node = node.rest) {
+        array.push(node.value);
+      }
+      return array;
+    }
+    console.log(listToArray(arrayToList([10, 20, 30])));
+    // → [10, 20, 30]
+
+    function prepend(newElement, list) {
+      list = {
+        value: newElement,
+        rest: list
+      };
+      return list;
+    }
+    console.log(prepend(10, prepend(20, null)));
+    // → {value: 10, rest: {value: 20, rest: null}}
+
+    function nth(list, n) {
+      /*if (!list) return undefined; // uses falsy value of null `list` when the nth position doesn't exist
+      else */
+      if (n == 0) return list.value;
+      else return nth(list.rest, --n);
+    }
+    console.log(nth(arrayToList([10, 20, 30]), 1));
+    // → 20
+  </script>
+</body>
+
 </html>
