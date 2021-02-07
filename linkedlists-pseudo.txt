@@ -1,4 +1,4 @@
-NOTES for writing function `nth()`:
+NOTES for function `nth()`:
 
 
 `if (list.value == null)` will never execute, because if `list` itself is null, it cannot have properties like `list.value`.
