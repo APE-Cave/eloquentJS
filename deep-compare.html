@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script>
+  // CASES: (`*` means accounted for)
+  // * 01 primitive &
+  // *   1a equal
+  // *   1b not equal
+  // * 02 objects &
+  //     2a equal
+  //     2b values not equal
+  // *   2c one is null
+  // *   2d not null
+  // *   2e both null
+  // *   2f # properties equal
+  // *   2g # properties not equal
+  // * 03 mixed types
+
+    function deepEqual(x, y) {
+      if (typeof(x) == `object` && typeof(y) == `object`) { // 02
+        if (x && y) { // 2d
+          console.log(`they're both objects!`);
+          if (Object.keys(x).length == Object.keys(y).length) { // 2f
+            let xKeys = Object.keys(x),
+              yKeys = Object.keys(y);
+
+          } else return false; //2g
+        } else if (!x && !y) return true; // 2e
+        else return false; //2c
+      } else if (x === y) return true; // 01, 1a
+      else return false; // 1b, 03
+
+    }
+
+    let obj = {
+      here: {
+        is: "an"
+      },
+      object: 2
+    };
+    console.log(deepEqual(obj, obj));
+    // → true
+    console.log(deepEqual(obj, {
+      here: 1,
+      object: 2
+    }));
+    // → false
+    console.log(deepEqual(obj, {
+      here: {
+        is: "an"
+      },
+      object: 2
+    }));
+    // → true
+  </script>
+</body>
+
+</html>

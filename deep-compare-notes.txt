@@ -1,0 +1,85 @@
+The == operator compares objects by identity (i.e. what objects they GRASP/POINT TO). But sometimes you’d prefer to compare the values of their actual properties.
+
+Write a function deepEqual that takes two values and returns true only if they are the same value or are objects with the same properties, where the values of the properties are equal when compared with a recursive call to deepEqual.
+
+To find out whether values should be compared directly (use the === operator for that) or have their properties compared, you can use the typeof operator. If it produces "object" for both values, you should do a deep comparison. But you have to take one silly exception into account: because of a historical accident, typeof null also produces "object".
+
+The Object.keys function will be useful when you need to go over the properties of objects to compare them.
+        let obj = {here: {is: "an"}, object: 2};
+        let y = {here: {is: "an"}, object: 2};
+        console.log(Object.keys(obj)); // → ["here", "object"]
+        console.log(Object.keys(obj) == Object.keys(y)); // → FALSE
+        console.log(Object.keys(obj)[0] == Object.keys(y)[0]); // → TRUE
+
+        let yKey = Object.keys(y)[0];
+        console.log(y[yKey]);     // → {is: "an"}
+
+INPUTS: x, y
+RETURN: true/false
+CONDITIONS:
+typeof(x) && typeof(y) both [object] AND x && y !== null
+  x && y have same properties (Object.keys)
+    x && y properties have same values
+x === y
+x != y
+
+DESIRED ACTIONS/OUTPUTS:
+Return TRUE IF x == y || x.properties.values == y.properties.values
+
+CASES:
+primitive &
+  equal
+  not equal
+objects &
+  equal
+  one is null
+  values not equal
+mixed types
+
+
+PSEUDOCODE:
+function deepEqual (x, y) {
+  IF x & y are both objects THEN look at their properties
+    IF x & y are NOT null
+      GET properties
+      IF length of property arrays NOT equal, return false;
+        ELSE
+        LOOP to COMPARE each x.property and y.property // `for(i=...)`?
+          IF x.property[i] != y.property[i], THEN return false;
+          ELSE return deepEqual(value) //look at values within properties
+    ELSE if (x === y) return true;
+  ELSE return false;
+}
+
+
+
+
+
+
+EXAMPLES:
+
+let obj = 4;
+console.log(deepEqual(obj, `4`)); // → FALSE
+
+let obj = {here: {is: "an"}, object: 2};
+console.log(obj == {here: 1, object: 2}); // → FALSE
+console.log(obj == {here: {is: "an"}, object: 2}); // → FALSE
+
+let y = {here: {is: "an"}, object: 2};
+console.log(obj == y); // → FALSE
+console.log(obj.object === y.object); // → TRUE (because 2 is primitive)
+
+From https://medium.com/javascript-in-plain-english/comparing-objects-in-javascript-ce2dc1f3de7f: "...variables containing a primitive type are given a value in memory. Variables containing a non-primitive type are given a reference in memory."
+
+let a = 1;
+let b = a;
+a = 2;            // `a` now points to a different value
+console.log(b);   // `b` still points to 1, a primitive
+                  // data type (number), which has its own place in memory and cannot be changed.
+
+let a = {value:1}; // NOT primitive data type, `a` holds a
+                   // reference to object's location in memory
+let b = a;         // `b` now points to that same location
+a.value = 2;       // Changes the property value in the object
+console.log(b);    // -> {value: 2} `b` points to the object,
+                   // which has changed
