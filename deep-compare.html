@@ -8,56 +8,53 @@
 
 <body>
   <script>
-  // CASES: (`*` means accounted for)
-  // * 01 primitive &
-  // *   1a equal
-  // *   1b not equal
-  // * 02 objects &
-  //     2a equal
-  //     2b values not equal
-  // *   2c one is null
-  // *   2d not null
-  // *   2e both null
-  // *   2f # properties equal
-  // *   2g # properties not equal
-  // * 03 mixed types
+    // CASES: (`*` means accounted for)
+    // * 01 primitive &
+    // *   1a equal
+    // *   1b not equal
+    // * 02 objects &
+    //     2a equal
+    //     2b values not equal
+    // *   2c one is null
+    // *   2d not null
+    // *   2e both null
+    // *   2f # properties equal
+    // *   2g # properties not equal
+    // * 03 mixed types
 
-    function deepEqual(x, y) {
+    function deepEqual(x, y, i = 0) {
       if (typeof(x) == `object` && typeof(y) == `object`) { // 02
         if (x && y) { // 2d
           console.log(`they're both objects!`);
           if (Object.keys(x).length == Object.keys(y).length) { // 2f
-            let xKeys = Object.keys(x),
-              yKeys = Object.keys(y);
+            let xKeys = Object.keys(x);
+            let yKeys = Object.keys(y);
+
+            if (xKeys[i] === yKeys[i]) {
+              // Recursively sends the comparison into two branches: value of this (first) property AND the key of the next property
+              return deepEqual(x[xKeys[i]], y[yKeys[i]]) && deepEqual(xKeys[i+1], yKeys[i+1], i++);
+    // TODO: CHECK whether i values are behaving as intended with this recursion 
+            }
+
 
           } else return false; //2g
-        } else if (!x && !y) return true; // 2e
+        } else if (!x && !y) return true; // 2e BOTH items are objects and null
         else return false; //2c
-      } else if (x === y) return true; // 01, 1a
+      } else if (x === y && i == 0) return true; // 01, 1a // can make this only apply to first pass by adding condition (i == 0)
       else return false; // 1b, 03
 
     }
 
-    let obj = {
-      here: {
-        is: "an"
-      },
-      object: 2
-    };
+    // TEST CASES:
+    /***************
+    let obj = {here: {is: "an"},object: 2};
     console.log(deepEqual(obj, obj));
     // → true
-    console.log(deepEqual(obj, {
-      here: 1,
-      object: 2
-    }));
+    console.log(deepEqual(obj, {here: 1,object: 2}));
     // → false
-    console.log(deepEqual(obj, {
-      here: {
-        is: "an"
-      },
-      object: 2
-    }));
+    console.log(deepEqual(obj, {here: {is: "an"},object: 2}));
     // → true
+    ***************/
   </script>
 </body>
 

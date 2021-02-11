@@ -9,7 +9,7 @@ The Object.keys function will be useful when you need to go over the properties 
         let y = {here: {is: "an"}, object: 2};
         console.log(Object.keys(obj)); // → ["here", "object"]
         console.log(Object.keys(obj) == Object.keys(y)); // → FALSE
-        console.log(Object.keys(obj)[0] == Object.keys(y)[0]); // → TRUE
+        console.log(Object.keys(obj)[0] === Object.keys(y)[0]); // → TRUE
 
         let yKey = Object.keys(y)[0];
         console.log(y[yKey]);     // → {is: "an"}
@@ -50,9 +50,13 @@ function deepEqual (x, y) {
     ELSE if (x === y) return true;
   ELSE return false;
 }
+IDEA: Return FALSE when anything doesn't compare, only return true when end of comparison is reached (!x && !y) without event.
+TODO: Remove all other TRUE conditions to make the above idea work
 
-
-
+IDEA: If the function compares the first property keys and finds them to be equal, returning `true` will end the function. Need to account for this. Could add a variable that defaults to `true` and only gets changed when comparison fails. Or maybe it doesn't get changed, but it is only returned if the function finds both objects equal/after final iteration?
+  or
+IDEA recursive call is:
+return (deepEqual(x&y value) && deepEqual(nextproperty ++i));
 
 
 
