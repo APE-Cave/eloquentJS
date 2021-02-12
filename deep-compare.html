@@ -31,16 +31,13 @@
             let yKeys = Object.keys(y);
 
             if (xKeys[i] === yKeys[i]) {
-              // Recursively sends the comparison into two branches: value of this (first) property AND the key of the next property
+              // Recursively sends the comparison into two branches: value of this property AND the key of the next property
               return deepEqual(x[xKeys[i]], y[yKeys[i]]) && deepEqual(xKeys[i+1], yKeys[i+1], i++);
-    // TODO: CHECK whether i values are behaving as intended with this recursion 
             }
-
-
           } else return false; //2g
         } else if (!x && !y) return true; // 2e BOTH items are objects and null
         else return false; //2c
-      } else if (x === y && i == 0) return true; // 01, 1a // can make this only apply to first pass by adding condition (i == 0)
+      } else if (x === y && i == 0) return true; // 01, 1a // make this only apply to first pass by adding condition (i == 0)
       else return false; // 1b, 03
 
     }
