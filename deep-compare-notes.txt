@@ -57,6 +57,14 @@ IDEA: If the function compares the first property keys and finds them to be equa
   or
 IDEA recursive call is:
 return (deepEqual(x&y value) && deepEqual(nextproperty ++i));
+IDEA Testing for correct understanding of storage of incrementor value
+// let i = 0, x = ['A', 'B', 'C'];
+// function xTest(x, i) {
+//   console.log(x + ' | i is:' + i);
+//   if (i < 3) return xTest(x[i++], i++);
+// }
+// console.log(xTest(x, i)); console.log(i);
+
 
 
 

@@ -8,7 +8,34 @@
 
 <body>
   <script>
-    // CASES: (`*` means accounted for)
+
+    function deepEqual(x, y, i = 0) {
+      if (x === y) return true;  // strict equal for primitive data types and when both values are null (which will occur at end of each recursion branch)
+
+      if (x == null || typeof(x) != `object` || y == null || typeof(y) != `object`) return false;  // because previous condition returns (ends the function) when both values are null, if we reach this line and either value is null, it means that they aren't BOTH null, therefore it should return false.
+
+      let xKeys = Object.keys(x), yKeys = Object.keys(y);
+      if (xKeys.length != yKeys.length) return false;
+
+      if (xKeys[i] !== yKeys[i]) return false;
+
+      return deepEqual(x[xKeys[i]], y[yKeys[i]]) && deepEqual(xKeys[i + 1], yKeys[i + 1], i++);
+    }
+
+    // TEST CASES:
+    // let obj = {here: {is: "an"},object: 2};
+    // console.log(deepEqual(obj, obj));
+    // // → true
+    // console.log(deepEqual(obj, {here: 1,object: 2}));
+    // // → false
+    // console.log(deepEqual(obj, {here: {is: "an"},object: 2}));
+    // // → true
+    // console.log(deepEqual(obj, {here: {be: "an"}, object: 2}));
+    // // → false
+    // console.log(deepEqual(obj, {object: 2, here: {is: "an"}}));
+    // // → ???
+
+    // LOGIC CASES: (`*` means accounted for)
     // * 01 both primitive &
     // *   1a equal
     // *   1b not equal
@@ -24,39 +51,7 @@
     // *   2j property keys not equal
     // * 03 mixed types
 
-    function deepEqual(x, y, i = 0) {
-      if (typeof(x) == `object` && typeof(y) == `object`) { // 02
-        if (x && y) { // 2d
-          let xKeys = Object.keys(x);
-          let yKeys = Object.keys(y);
-          if (xKeys.length == yKeys.length) { // 2f
-            if (xKeys[i] === yKeys[i]) { // 2h
-              // Recursively sends the comparison into two branches: value of this property AND the key of the next property
-              return deepEqual (x[xKeys[i]], y[yKeys[i]]) && deepEqual(xKeys[i+1], yKeys[i+1], i++);
-            } else return false; // 2j
-          } else return false; // 2g
-        } else if (!x && !y) return true; // 2a, 2e BOTH null (and therefore are objects). Is also true when a given branch reaches its end without returning `false`, so this is the condition that stops further recursion beyond the ends of the objects.
-        else return false; //2c
-      } else if (x === y && i == 0) return true; // 01, 1a // make this only apply to first pass by adding condition (i == 0)
-      else return false; // 1b, 03
-    }
 
-    // TEST CASES:
-    // let obj = {here: {is: "an"},object: 2};
-    // console.log(deepEqual(obj, obj));
-    // // → true
-    // console.log(deepEqual(obj, {here: 1,object: 2}));
-    // // → false
-    // console.log(deepEqual(obj, {here: {is: "an"},object: 2}));
-    // // → true
-    // console.log(deepEqual(obj, {here: {be: "an"}, object: 2}));
-
-    // let i = 0, x = ['A', 'B', 'C'];
-    // function xTest(x, i) {
-    //   console.log(x + ' | i is:' + i);
-    //   if (i < 3) return xTest(x[i++], i++);
-    // }
-    // console.log(xTest(x, i)); console.log(i);
   </script>
 </body>
 
