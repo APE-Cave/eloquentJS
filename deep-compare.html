@@ -8,7 +8,7 @@
 
 <body>
   <script>
-
+  // My solution differs from the author's in that my solution requires two objects to have the same properties and values in the SAME ORDER. The author's solution does not compare ordering of properties, which would be useful in cases where mine is not, and vice versa. 
     function deepEqual(x, y, i = 0) {
       if (x === y) return true;  // strict equal for primitive data types and when both values are null (which will occur at end of each recursion branch)
 
@@ -19,7 +19,7 @@
 
       if (xKeys[i] !== yKeys[i]) return false;
 
-      return deepEqual(x[xKeys[i]], y[yKeys[i]]) && deepEqual(xKeys[i + 1], yKeys[i + 1], i++);
+      return deepEqual(x[xKeys[i]], y[yKeys[i]]) && deepEqual(xKeys[i + 1], yKeys[i + 1], i++); // The `&&` ensures that any return of `false` in the recursion branches will return `false` all the way back to the original function call.
     }
 
     // TEST CASES:
